@@ -7,10 +7,10 @@
 
 LiquidCrystal_I2C lcd(0x27,20,4);
 
-#define RST_PIN         9          // Configurable, see typical pin layout above
+#define RST_PIN         9
 #define SS_PIN          10 
-const byte ROWS = 4; // 4 строки
-const byte COLS = 4; // 4 столбца
+const byte ROWS = 4;
+const byte COLS = 4;
 char keys[ROWS][COLS] = {
   {'1','2','3','A'},
   {'4','5','6','B'},
@@ -45,7 +45,7 @@ void setup() {
   lcd.print("Attach your card");
   lcd.setCursor(0, 1);
   lcd.print("or enter PIN.");
-  servoDver.write(0); // сообщаем микро серво угол поворота
+  servoDver.write(0);
 }
 
 void getdostup(){
@@ -119,13 +119,13 @@ void loop() {
       lcd.clear();
       lcd.print("Access trued!");
       for (int angle = 0; angle <= 120; angle++) {
-        servoDver.write(angle); // сообщаем микро серво угол поворота
-        delay(20); // ждем 20 мс, пока серво не сделает поворот
+        servoDver.write(angle);
+        delay(20);
       }
       delay(5000);
       for (int angle = 120; angle >= 0; angle--) {
-        servoDver.write(angle); // сообщаем микро серво угол поворота
-        delay(2); // ждем 20 мс, пока серво не сделает поворот
+        servoDver.write(angle);
+        delay(2);
       }
       lcd.clear();
       lcd.setCursor(0, 0);
@@ -150,16 +150,15 @@ void loop() {
   }
 
   
-  // Ожидание прикладывания новой RFID-метки:
   if ( ! mfrc522.PICC_IsNewCardPresent()) {
-    return; // выход, если не приложена новая карта
+    return;
   }
-  // Считываем серийный номер:
+
   if ( ! mfrc522.PICC_ReadCardSerial()) {
     
-    return; // выход, если невозможно считать сер. номер
+    return;
   }
-  // }
+
   printHex(mfrc522.uid.uidByte, mfrc522.uid.size);
   Serial.println();
   getdostup();
